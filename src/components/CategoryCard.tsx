@@ -13,6 +13,9 @@ interface CategoryCardProps {
 }
 
 const CategoryCard = ({ id, name, icon: Icon, description, color }: CategoryCardProps) => {
+  // Extract color name from the color class (e.g., "bg-blue-500" -> "blue-500")
+  const colorName = color.replace("bg-", "");
+  
   return (
     <Link to={`/categories/${id}`}>
       <motion.div
@@ -28,9 +31,9 @@ const CategoryCard = ({ id, name, icon: Icon, description, color }: CategoryCard
           <div className="flex items-center gap-3 mb-3">
             <div className={cn(
               "rounded-full p-3 flex items-center justify-center",
-              color + "/10"
+              `${color}/10`
             )}>
-              <Icon className={cn("text-" + color.replace("bg-", ""))} size={24} />
+              <Icon className={`text-${colorName}`} size={24} />
             </div>
             <h3 className="font-semibold text-lg">{name}</h3>
           </div>
