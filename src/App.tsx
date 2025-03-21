@@ -12,6 +12,7 @@ import SubjectDetail from "./pages/SubjectDetail";
 import Profile from "./pages/Profile";
 import Quiz from "./pages/Quiz";
 import Results from "./pages/Results";
+import Leaderboard from "./pages/Leaderboard";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -31,6 +32,7 @@ const App = () => (
             <Route path="/profile" element={<Profile />} />
             <Route path="/quiz/:categoryId/:subjectId/:quizId" element={<Quiz />} />
             <Route path="/results/:categoryId/:subjectId/:quizId" element={<Results />} />
+            <Route path="/leaderboard" element={<Leaderboard />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AnimatePresence>
