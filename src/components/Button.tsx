@@ -39,9 +39,9 @@ const Button = ({
     lg: "text-base px-6 py-3 h-12"
   };
 
+  // Using a regular button instead of motion.button to fix TypeScript errors
   return (
-    <motion.button
-      whileTap={{ scale: 0.98 }}
+    <button
       className={cn(
         baseClasses,
         variantClasses[variant],
@@ -81,7 +81,7 @@ const Button = ({
       {!isLoading && icon && iconPosition === "right" ? (
         <span className="ml-2">{icon}</span>
       ) : null}
-    </motion.button>
+    </button>
   );
 };
 
