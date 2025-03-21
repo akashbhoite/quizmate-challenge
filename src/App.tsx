@@ -7,6 +7,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import Index from "./pages/Index";
 import Categories from "./pages/Categories";
+import CategoryDetail from "./pages/CategoryDetail";
+import SubjectDetail from "./pages/SubjectDetail";
 import Profile from "./pages/Profile";
 import Quiz from "./pages/Quiz";
 import Results from "./pages/Results";
@@ -24,6 +26,8 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/categories" element={<Categories />} />
+            <Route path="/categories/:categoryId" element={<CategoryDetail />} />
+            <Route path="/categories/:categoryId/:subjectId" element={<SubjectDetail />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/quiz/:categoryId/:subjectId/:quizId" element={<Quiz />} />
             <Route path="/results/:categoryId/:subjectId/:quizId" element={<Results />} />

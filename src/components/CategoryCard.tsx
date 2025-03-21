@@ -13,7 +13,7 @@ interface CategoryCardProps {
 }
 
 const CategoryCard = ({ id, name, icon: Icon, description, color }: CategoryCardProps) => {
-  // Extract color name from the color class (e.g., "bg-blue-500" -> "blue-500")
+  // Extract color name without the "bg-" prefix
   const colorName = color.replace("bg-", "");
   
   return (
@@ -42,7 +42,7 @@ const CategoryCard = ({ id, name, icon: Icon, description, color }: CategoryCard
           
           <div className="mt-4 flex justify-between items-center">
             <span className="text-xs font-medium text-foreground/50">
-              5 subjects available
+              {name === 'Mathematics' ? '5' : name === 'Science' ? '3' : '2'} subjects available
             </span>
             
             <motion.div
