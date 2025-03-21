@@ -3,7 +3,8 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
-  Trophy, Book, History, Settings, Medal, Award, ArrowUpRight
+  Trophy, Book, History, Settings, Medal, Award, ArrowUpRight,
+  Calculator, Timer
 } from "lucide-react";
 import Layout from "@/components/Layout";
 import ProfileStats from "@/components/ProfileStats";
@@ -99,7 +100,7 @@ const Profile = () => {
                         <div className={`p-3 rounded-full ${achievement.earned ? 'bg-primary/10' : 'bg-muted'}`}>
                           {achievement.icon === 'trophy' && <Trophy size={20} className={achievement.earned ? 'text-primary' : 'text-foreground/30'} />}
                           {achievement.icon === 'calculator' && <Calculator size={20} className={achievement.earned ? 'text-primary' : 'text-foreground/30'} />}
-                          {achievement.icon === 'timer' && <Clock size={20} className={achievement.earned ? 'text-primary' : 'text-foreground/30'} />}
+                          {achievement.icon === 'timer' && <Timer size={20} className={achievement.earned ? 'text-primary' : 'text-foreground/30'} />}
                         </div>
                         
                         <div className="flex-1">

@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useParams, useNavigate } from "react-router-dom";
@@ -8,7 +7,7 @@ import {
 } from "lucide-react";
 import Layout from "@/components/Layout";
 import Button from "@/components/Button";
-import { toast } from "@/components/ui/sonner";
+import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { categories, Question, Option } from "@/utils/quizData";
 
@@ -23,7 +22,6 @@ const Quiz = () => {
   const [score, setScore] = useState(0);
   const [answers, setAnswers] = useState<Array<{ questionId: string, selectedOptionId: string | null, isCorrect: boolean }>>([]);
   
-  // Find the current quiz
   const category = categories.find((c) => c.id === categoryId);
   const subject = category?.subjects.find((s) => s.id === subjectId);
   const quiz = subject?.quizzes.find((q) => q.id === quizId);
@@ -32,7 +30,6 @@ const Quiz = () => {
   const currentQuestion = questions[currentQuestionIndex];
   const isLastQuestion = currentQuestionIndex === questions.length - 1;
   
-  // Set up timer
   useEffect(() => {
     if (!currentQuestion || isAnswerRevealed) return;
     
@@ -55,7 +52,6 @@ const Quiz = () => {
     return () => clearInterval(timer);
   }, [currentQuestionIndex, isAnswerRevealed, quiz?.timePerQuestion, selectedOption]);
   
-  // Handle quiz not found
   if (!quiz) {
     return (
       <Layout>

@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Calculator, Flask, BookOpen, Landmark, Globe } from "lucide-react";
+import { Calculator, Beaker, BookOpen, Landmark, Globe } from "lucide-react";
 import Layout from "@/components/Layout";
 import CategoryCard from "@/components/CategoryCard";
 import { staggerChildren } from "@/utils/animations";
@@ -9,7 +9,7 @@ import { categories } from "@/utils/quizData";
 
 const categoryIcons = {
   calculator: Calculator,
-  flask: Flask,
+  beaker: Beaker,
   "book-open": BookOpen,
   landmark: Landmark,
   globe: Globe
