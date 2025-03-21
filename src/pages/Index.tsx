@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, Users, Sparkles, Brain, Trophy } from "lucide-react";
+import { ArrowRight, Users, Sparkles, Brain, Trophy, Clock, CheckCircle, XCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import Layout from "@/components/Layout";
 import Button from "@/components/Button";
@@ -86,11 +86,56 @@ const Index = () => {
               transition={{ delay: 0.3, duration: 0.6 }}
               className="mt-16 relative"
             >
-              <div className="glass-card rounded-2xl overflow-hidden p-4 shadow-xl">
-                <div className="aspect-video bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-lg flex items-center justify-center">
-                  <span className="text-lg text-foreground/50">Quiz Interface Preview</span>
+              <div className="glass-card rounded-2xl overflow-hidden p-6 shadow-xl">
+                <div className="bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-lg p-6">
+                  {/* Quiz Preview Interface */}
+                  <div className="mb-6">
+                    <div className="flex justify-between items-center mb-4">
+                      <h3 className="text-lg font-semibold">Mathematics Quiz</h3>
+                      <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10">
+                        <Clock size={16} className="text-primary" />
+                        <span className="font-medium text-primary">15 sec</span>
+                      </div>
+                    </div>
+                    
+                    <div className="w-full bg-muted h-2 rounded-full">
+                      <div className="bg-primary h-2 rounded-full w-1/3" />
+                    </div>
+                  </div>
+                  
+                  <div className="bg-card border border-border rounded-lg p-4 mb-4">
+                    <h4 className="text-base font-medium mb-4">
+                      What is the value of x in the equation 2x + 5 = 15?
+                    </h4>
+                    
+                    <div className="space-y-3">
+                      <div className="p-3 rounded-lg border border-primary/50 bg-primary/10 flex justify-between items-center">
+                        <span>x = 5</span>
+                        <CheckCircle size={18} className="text-green-500" />
+                      </div>
+                      
+                      <div className="p-3 rounded-lg border border-border bg-card hover:border-primary/30 hover:bg-primary/5 transition-colors">
+                        <span>x = 10</span>
+                      </div>
+                      
+                      <div className="p-3 rounded-lg border border-red-500/50 bg-red-500/10 flex justify-between items-center">
+                        <span>x = 7</span>
+                        <XCircle size={18} className="text-red-500" />
+                      </div>
+                      
+                      <div className="p-3 rounded-lg border border-border bg-card hover:border-primary/30 hover:bg-primary/5 transition-colors">
+                        <span>x = 4</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="flex justify-end">
+                    <button className="flex items-center gap-2 px-4 py-2 rounded-md bg-primary text-primary-foreground">
+                      <span>Next Question</span>
+                      <ArrowRight size={16} />
+                    </button>
+                  </div>
                 </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent opacity-20 pointer-events-none" />
               </div>
             </motion.div>
           </div>
