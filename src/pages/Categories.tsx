@@ -7,6 +7,7 @@ import CategoryCard from "@/components/CategoryCard";
 import { staggerChildren } from "@/utils/animations";
 import { categories } from "@/utils/quizData";
 
+// Define the mapping of icon names to Lucide icon components
 const categoryIcons = {
   calculator: Calculator,
   beaker: Beaker,
@@ -45,16 +46,26 @@ const Categories = () => {
           animate="enter"
           className="grid grid-cols-1 md:grid-cols-2 gap-6"
         >
-          {categories.map((category) => (
-            <CategoryCard 
-              key={category.id}
-              id={category.id}
-              name={category.name}
-              description={category.description}
-              icon={categoryIcons[category.icon as keyof typeof categoryIcons]}
-              color={category.color}
-            />
-          ))}
+          {categories.map((category) => {
+            // Make sure the icon exists before passing it
+            const IconComponent = categoryIcons[category.icon as keyof typeof categoryIcons];
+            
+            if (!IconComponent) {
+              console.error(`Icon "${category.icon}" not found in categoryIcons`);
+              return null;
+            }
+            
+            return (
+              <CategoryCard 
+                key={category.id}
+                id={category.id}
+                name={category.name}
+                description={category.description}
+                icon={IconComponent}
+                color={category.color}
+              />
+            );
+          })}
         </motion.div>
         
         <div className="mt-12 glass-card rounded-xl p-6">
