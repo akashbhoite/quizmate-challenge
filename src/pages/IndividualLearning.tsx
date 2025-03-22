@@ -1,4 +1,3 @@
-
 import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Upload, FileText, BookOpen, Copy, Download, X, CheckCheck, Loader2, Send, Bot, MessageSquare, User } from "lucide-react";
@@ -288,7 +287,7 @@ const IndividualLearning = () => {
             {summary && (
               <Card className="mb-6">
                 <CardHeader>
-                  <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+                  <Tabs defaultValue={activeTab} onValueChange={setActiveTab} className="w-full">
                     <TabsList className="grid grid-cols-3 mb-2">
                       <TabsTrigger value="summary" className="flex items-center gap-2">
                         <FileText size={16} />
@@ -303,145 +302,147 @@ const IndividualLearning = () => {
                         Flashcards
                       </TabsTrigger>
                     </TabsList>
+                
+                    <TabsContent value="summary" className="mt-0">
+                      <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5 }}
+                      >
+                        <Textarea 
+                          value={summary} 
+                          readOnly 
+                          className="min-h-32 resize-none"
+                        />
+                      </motion.div>
+                      <div className="flex justify-end mt-4">
+                        <Button variant="outline" size="sm">
+                          <Download size={16} className="mr-2" />
+                          Download Summary
+                        </Button>
+                      </div>
+                    </TabsContent>
+                    
+                    <TabsContent value="chat" className="mt-0">
+                      <div className="flex flex-col h-[350px]">
+                        <div className="flex-1 overflow-y-auto mb-4 space-y-4 p-3 bg-muted/30 rounded-lg">
+                          {chatMessages.map((msg, idx) => (
+                            <div 
+                              key={idx} 
+                              className={cn(
+                                "flex gap-3 max-w-[80%]",
+                                msg.role === "user" ? "ml-auto" : ""
+                              )}
+                            >
+                              <div 
+                                className={cn(
+                                  "w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0",
+                                  msg.role === "user" 
+                                    ? "bg-primary text-primary-foreground order-2" 
+                                    : "bg-secondary text-secondary-foreground"
+                                )}
+                              >
+                                {msg.role === "user" ? <User size={14} /> : <Bot size={14} />}
+                              </div>
+                              <div 
+                                className={cn(
+                                  "py-2 px-3 rounded-lg",
+                                  msg.role === "user" 
+                                    ? "bg-primary text-primary-foreground" 
+                                    : "bg-secondary text-secondary-foreground"
+                                )}
+                              >
+                                {msg.content}
+                              </div>
+                            </div>
+                          ))}
+                          <div ref={chatEndRef} />
+                        </div>
+                        
+                        <form onSubmit={handleQuestionSubmit} className="flex gap-2">
+                          <Input
+                            placeholder="Ask a question about the document..."
+                            value={question}
+                            onChange={(e) => setQuestion(e.target.value)}
+                            disabled={isAskingQuestion || !summary}
+                            className="flex-1"
+                          />
+                          <Button 
+                            type="submit" 
+                            disabled={isAskingQuestion || !question.trim() || !summary}
+                          >
+                            {isAskingQuestion ? (
+                              <Loader2 size={16} className="animate-spin" />
+                            ) : (
+                              <Send size={16} />
+                            )}
+                          </Button>
+                        </form>
+                      </div>
+                    </TabsContent>
+                    
+                    <TabsContent value="flashcards" className="mt-0 md:hidden">
+                      <div className="space-y-4">
+                        {flashcards.map((card, index) => (
+                          <motion.div
+                            key={index}
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: index * 0.1, duration: 0.5 }}
+                            className="perspective-500"
+                          >
+                            <motion.div
+                              className={cn(
+                                "relative cursor-pointer w-full rounded-lg transition-all duration-500",
+                                "h-[140px] sm:h-[120px]"
+                              )}
+                              onClick={() => flipCard(index)}
+                              animate={{ rotateX: flippedCard === index ? 180 : 0 }}
+                            >
+                              <div
+                                className={cn(
+                                  "absolute inset-0 backface-hidden rounded-lg p-4 flex flex-col",
+                                  "bg-card border border-border shadow",
+                                  flippedCard === index ? "opacity-0" : "opacity-100"
+                                )}
+                              >
+                                <div className="flex justify-between items-start">
+                                  <span className="text-sm font-medium text-muted-foreground">Question</span>
+                                  <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center">
+                                    <span className="text-xs font-medium text-primary">{index + 1}</span>
+                                  </div>
+                                </div>
+                                <div className="flex items-center justify-center flex-1">
+                                  <p className="font-medium text-center">{card.question}</p>
+                                </div>
+                              </div>
+                              
+                              <div
+                                className={cn(
+                                  "absolute inset-0 backface-hidden rounded-lg p-4 flex flex-col",
+                                  "bg-primary/5 border border-primary/20 shadow",
+                                  "transform rotateX-180"
+                                )}
+                              >
+                                <div className="flex justify-between items-start">
+                                  <span className="text-sm font-medium text-primary">Answer</span>
+                                  <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center">
+                                    <CheckCheck size={14} className="text-primary" />
+                                  </div>
+                                </div>
+                                <div className="flex items-center justify-center flex-1">
+                                  <p className="text-foreground text-center">{card.answer}</p>
+                                </div>
+                              </div>
+                            </motion.div>
+                          </motion.div>
+                        ))}
+                      </div>
+                    </TabsContent>
                   </Tabs>
                 </CardHeader>
                 <CardContent>
-                  <TabsContent value="summary" className="mt-0">
-                    <motion.div
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5 }}
-                    >
-                      <Textarea 
-                        value={summary} 
-                        readOnly 
-                        className="min-h-32 resize-none"
-                      />
-                    </motion.div>
-                    <div className="flex justify-end mt-4">
-                      <Button variant="outline" size="sm">
-                        <Download size={16} className="mr-2" />
-                        Download Summary
-                      </Button>
-                    </div>
-                  </TabsContent>
-                  
-                  <TabsContent value="chat" className="mt-0">
-                    <div className="flex flex-col h-[350px]">
-                      <div className="flex-1 overflow-y-auto mb-4 space-y-4 p-3 bg-muted/30 rounded-lg">
-                        {chatMessages.map((msg, idx) => (
-                          <div 
-                            key={idx} 
-                            className={cn(
-                              "flex gap-3 max-w-[80%]",
-                              msg.role === "user" ? "ml-auto" : ""
-                            )}
-                          >
-                            <div 
-                              className={cn(
-                                "w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0",
-                                msg.role === "user" 
-                                  ? "bg-primary text-primary-foreground order-2" 
-                                  : "bg-secondary text-secondary-foreground"
-                              )}
-                            >
-                              {msg.role === "user" ? <User size={14} /> : <Bot size={14} />}
-                            </div>
-                            <div 
-                              className={cn(
-                                "py-2 px-3 rounded-lg",
-                                msg.role === "user" 
-                                  ? "bg-primary text-primary-foreground" 
-                                  : "bg-secondary text-secondary-foreground"
-                              )}
-                            >
-                              {msg.content}
-                            </div>
-                          </div>
-                        ))}
-                        <div ref={chatEndRef} />
-                      </div>
-                      
-                      <form onSubmit={handleQuestionSubmit} className="flex gap-2">
-                        <Input
-                          placeholder="Ask a question about the document..."
-                          value={question}
-                          onChange={(e) => setQuestion(e.target.value)}
-                          disabled={isAskingQuestion || !summary}
-                          className="flex-1"
-                        />
-                        <Button 
-                          type="submit" 
-                          disabled={isAskingQuestion || !question.trim() || !summary}
-                        >
-                          {isAskingQuestion ? (
-                            <Loader2 size={16} className="animate-spin" />
-                          ) : (
-                            <Send size={16} />
-                          )}
-                        </Button>
-                      </form>
-                    </div>
-                  </TabsContent>
-                  
-                  <TabsContent value="flashcards" className="mt-0 md:hidden">
-                    <div className="space-y-4">
-                      {flashcards.map((card, index) => (
-                        <motion.div
-                          key={index}
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: index * 0.1, duration: 0.5 }}
-                          className="perspective-500"
-                        >
-                          <motion.div
-                            className={cn(
-                              "relative cursor-pointer w-full rounded-lg transition-all duration-500",
-                              "h-[140px] sm:h-[120px]"
-                            )}
-                            onClick={() => flipCard(index)}
-                            animate={{ rotateX: flippedCard === index ? 180 : 0 }}
-                          >
-                            <div
-                              className={cn(
-                                "absolute inset-0 backface-hidden rounded-lg p-4 flex flex-col",
-                                "bg-card border border-border shadow",
-                                flippedCard === index ? "opacity-0" : "opacity-100"
-                              )}
-                            >
-                              <div className="flex justify-between items-start">
-                                <span className="text-sm font-medium text-muted-foreground">Question</span>
-                                <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center">
-                                  <span className="text-xs font-medium text-primary">{index + 1}</span>
-                                </div>
-                              </div>
-                              <div className="flex items-center justify-center flex-1">
-                                <p className="font-medium text-center">{card.question}</p>
-                              </div>
-                            </div>
-                            
-                            <div
-                              className={cn(
-                                "absolute inset-0 backface-hidden rounded-lg p-4 flex flex-col",
-                                "bg-primary/5 border border-primary/20 shadow",
-                                "transform rotateX-180"
-                              )}
-                            >
-                              <div className="flex justify-between items-start">
-                                <span className="text-sm font-medium text-primary">Answer</span>
-                                <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center">
-                                  <CheckCheck size={14} className="text-primary" />
-                                </div>
-                              </div>
-                              <div className="flex items-center justify-center flex-1">
-                                <p className="text-foreground text-center">{card.answer}</p>
-                              </div>
-                            </div>
-                          </motion.div>
-                        </motion.div>
-                      ))}
-                    </div>
-                  </TabsContent>
+                  {/* Card content is now handled within the Tabs component */}
                 </CardContent>
               </Card>
             )}
