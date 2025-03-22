@@ -1,5 +1,5 @@
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Upload, FileText, BookOpen, Copy, Download, X, CheckCheck, Loader2, Send, Bot, MessageSquare, User } from "lucide-react";
 import Layout from "@/components/Layout";
@@ -155,7 +155,7 @@ const IndividualLearning = () => {
   };
 
   // Scroll to bottom when new messages are added
-  React.useEffect(() => {
+  useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chatMessages]);
   
