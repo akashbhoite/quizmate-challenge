@@ -14,6 +14,7 @@ import Quiz from "./pages/Quiz";
 import Results from "./pages/Results";
 import Leaderboard from "./pages/Leaderboard";
 import NotFound from "./pages/NotFound";
+import IndividualLearning from "./pages/IndividualLearning";
 
 const queryClient = new QueryClient();
 
@@ -33,6 +34,7 @@ const App = () => (
             <Route path="/quiz/:categoryId/:subjectId/:quizId" element={<Quiz />} />
             <Route path="/results/:categoryId/:subjectId/:quizId" element={<Results />} />
             <Route path="/leaderboard" element={<Leaderboard />} />
+            <Route path="/individual-learning" element={<IndividualLearning />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AnimatePresence>
