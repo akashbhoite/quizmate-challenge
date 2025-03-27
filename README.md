@@ -1,4 +1,4 @@
-# Welcome to your Lovable project
+# AI Tutor UI Design
 
 ## Project info
 
